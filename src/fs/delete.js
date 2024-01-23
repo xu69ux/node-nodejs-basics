@@ -1,8 +1,9 @@
+import path from 'path';
 import fs from 'fs/promises';
 
-const remove = async () => {
+const remove = async (pathToFile) => {
     try {
-        await fs.unlink('src/fs/files/fileToRemove.txt');
+        await fs.unlink(pathToFile);
     } catch (err) {
         if (err.code === 'ENOENT') {
             throw new Error('FS operation failed');
@@ -12,4 +13,4 @@ const remove = async () => {
     }
 };
 
-await remove();
+await remove(path.join('src/fs/files', 'fileToRemove.txt'));

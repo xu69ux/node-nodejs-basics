@@ -1,8 +1,8 @@
 import fs from 'fs/promises';
 
-const read = async () => {
+const read = async (pathToFile) => {
     try {
-        const data = await fs.readFile('src/fs/files/fileToRead.txt', 'utf-8');
+        const data = await fs.readFile(pathToFile, 'utf-8');
         console.log(data);
     } catch (err) {
         if (err.code === 'ENOENT') {
@@ -13,4 +13,4 @@ const read = async () => {
     }
 };
 
-await read();
+await read('src/fs/files/fileToRead.txt');

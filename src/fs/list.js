@@ -1,8 +1,8 @@
 import fs from 'fs/promises';
 
-const list = async () => {
+const list = async (pathToDir) => {
     try {
-        const files = await fs.readdir('src/fs/files');
+        const files = await fs.readdir(pathToDir);
         console.log(files);
     } catch (err) {
         if (err.code === 'ENOENT') {
@@ -13,4 +13,4 @@ const list = async () => {
     }
 };
 
-await list();
+await list('src/fs/files');

@@ -1,10 +1,10 @@
 import fs from 'fs';
 
-const write = async () => {
-    const writeStream = fs.createWriteStream('src/streams/files/fileToWrite.txt');
+const write = async (pathToFile) => {
+    const writeStream = fs.createWriteStream(pathToFile);
     process.stdin.on('data', (chunk) => {
         writeStream.write(chunk);
     });
 };
 
-await write();
+await write('src/streams/files/fileToWrite.txt');

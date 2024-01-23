@@ -5,12 +5,12 @@ import { promisify } from 'util';
 
 const pipelineAsync = promisify(pipeline);
 
-const decompress = async () => {
+const decompress = async (pathToSource, pathToDestination) => {
     const gunzip = zlib.createGunzip(); 
-    const source = fs.createReadStream('src/zip/compress.gz');
-    const destination = fs.createWriteStream('src/zip/files/fileAfterDecompress.txt');
+    const source = fs.createReadStream(pathToSource);
+    const destination = fs.createWriteStream(pathToDestination);
 
     await pipelineAsync(source, gunzip, destination);
 };
 
-await decompress();
+await decompress('src/zip/compress.gz', 'src/zip/files/fileAfterDecompress.txt');

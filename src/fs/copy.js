@@ -1,21 +1,23 @@
-import fs from 'fs/promises';
 import path from 'path';
+import fs from 'fs/promises';
 
-const copy = async () => {
+const copy = async (sourceDir, targetDir) => {
     try {
-        await fs.access('src/fs/files_copy');
+        await fs.access(targetDir);
         throw new Error('FS operation failed');
     } catch (err) {
         if (err.code === 'ENOENT') {
-            await fs.mkdir('src/fs/files_copy');
-            const files = await fs.readdir('src/fs/files');
-            for (const file of files) {
-                await fs.copyFile(path.join('src/fs/files', file), path.join('src/fs/files_copy', file));
-            }
+            await fs.mkdir(targetDir);
+            const files = await fs.readdir(sourceDir);
+            await Promise.all(files.map(file => {
+                const pathToSourceDir = path.join(sourceDir, file);
+                const pathToTargetDir = path.join(targetDir, file);
+                return fs.copyFile(pathToSourceDir, pathToTargetDir);
+            }));
         } else {
             throw err;
         }
     }
 };
 
-await copy();
+await copy('src/fs/files', 'src/fs/files_copy');

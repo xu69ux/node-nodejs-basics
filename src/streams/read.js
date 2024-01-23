@@ -1,10 +1,10 @@
 import fs from 'fs';
 
-const read = async () => {
-    const readStream = fs.createReadStream('src/streams/files/fileToRead.txt');
+const read = async (pathToFile) => {
+    const readStream = fs.createReadStream(pathToFile);
     readStream.on('data', (chunk) => {
         process.stdout.write(chunk);
     });
 };
 
-await read();
+await read('src/streams/files/fileToRead.txt');
